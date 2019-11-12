@@ -23,7 +23,7 @@ $ source /etc/environment
 ```shell
 $ echo $JAVA_HOME
 $ java -version
-```shell
+```
 
 
 # Maven
