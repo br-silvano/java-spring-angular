@@ -13,7 +13,7 @@ $ sudo apt-get install oracle-java8-installer
 $ sudo update-alternatives --config java
 $ sudo nano /etc/environment
 ```
-[Exemplo]
+[Exemplo]<br/>
 JAVA_HOME="/usr/lib/jvm/java-8-oracle"
 ```shell
 $ source /etc/environment
@@ -39,7 +39,7 @@ $ sudo cp -rf apache-maven-3.5.2 /opt
 ```shell
 $ sudo nano /etc/environment
 ```
-[Exemplo]
+[Exemplo]<br/>
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/apache-maven-3.5.2/bin"
 ```shell
 $ source /etc/environment
@@ -70,12 +70,12 @@ $ sudo cp -rf sts-bundle /opt
 ```shell
 $ sudo nano /usr/share/applications/STS.desktop
 ```
-[Desktop Entry]
-Name=STS
-Comment=Spring Tool Suite
-Exec=/opt/sts-bundle/sts-3.9.2.RELEASE/STS
-Icon=/opt/sts-bundle/sts-3.9.2.RELEASE/icon.xpm
-StartupNotify=true
-Terminal=false
-Type=Application
-Categories=Development;IDE;Java;
+[Desktop Entry]<br/>
+Name=STS<br/>
+Comment=Spring Tool Suite<br/>
+Exec=/opt/sts-bundle/sts-3.9.2.RELEASE/STS<br/>
+Icon=/opt/sts-bundle/sts-3.9.2.RELEASE/icon.xpm<br/>
+StartupNotify=true<br/>
+Terminal=false<br/>
+Type=Application<br/>
+Categories=Development;IDE;Java;<br/>
