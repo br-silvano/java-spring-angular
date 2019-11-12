@@ -33,7 +33,7 @@ $ java -version
 ```shell
 $ sudo tar xzvf apache-maven-3.5.2-bin.tar.gz
 $ sudo cp -rf apache-maven-3.5.2 /opt
-```shell
+```
 
 ### Configuração
 ```shell
@@ -52,7 +52,7 @@ $ mvn -version
 
 ### Publicação
 ```shell
-mvn clean package
+$ mvn clean package
 $ java -jar target/curso-api-0.1.0.jar
 ```
 
@@ -67,7 +67,9 @@ $ sudo cp -rf sts-bundle /opt
 ```
 
 ### Configuração
-`$ sudo nano /usr/share/applications/STS.desktop`
+```shell
+$ sudo nano /usr/share/applications/STS.desktop
+```
 [Desktop Entry]
 Name=STS
 Comment=Spring Tool Suite
