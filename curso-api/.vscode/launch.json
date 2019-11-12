@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ValidadorSenha",
+            "request": "launch",
+            "mainClass": "com.curso.api.service.validation.util.ValidadorSenha",
+            "projectName": "curso-api"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - GeradorSenha",
+            "request": "launch",
+            "mainClass": "com.curso.api.security.util.GeradorSenha",
+            "projectName": "curso-api"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ComprasApiApplication<curso-api>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.curso.api.CursoApiApplication",
+            "projectName": "curso-api",
+            "args": ""
+        }
+    ]
+}

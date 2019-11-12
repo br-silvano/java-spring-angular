@@ -1,0 +1,42 @@
+<div class="column is-6 is-offset-3">
+  <form [formGroup]="alteraSenhaForm" autocomplete="off" (ngSubmit)="alterar()">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <div class="field">
+          <p class="control has-icons-left">
+            <input class="input" type="password" formControlName="senha" placeholder="Senha">
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="field">
+          <p class="control has-icons-left">
+            <input class="input" type="password" formControlName="novaSenha" placeholder="Nova Senha">
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="field">
+          <p class="control has-icons-left">
+            <input class="input" type="password" formControlName="confirmaNovaSenha" placeholder="Confirma Nova Senha">
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <button class="button is-success is-fullwidth" type="submit" [disabled]="alteraSenhaForm.invalid">Alterar</button>
+      </div>
+    </div>
+  </form>
+</div>

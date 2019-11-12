@@ -1,0 +1,86 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<app-header></app-header>
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1 class="title">{{title.getTitle()}}</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="pesquisaForm" autocomplete="off" (ngSubmit)="pesquisar()">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container label="Código">
+          <input pInputText type="text" formControlName="codigo">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container label="Descrição">
+          <input pInputText type="text" formControlName="descricao">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12">
+        <app-input-container label="Status">
+          <br><p-selectButton [options]="statuss" formControlName="ativo"></p-selectButton>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="field is-grouped">
+          <p class="control">
+            <button class="button is-danger" type="submit">Pesquisar</button>
+          </p>
+          <p class="control">
+            <a class="button is-success" routerLink="/turnos/novo">Novo Turno</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-table [value]="turnos"
+        [lazy]="true" (onLazyLoad)="aoMudarPagina($event)"
+        [paginator]="true" [rows]="filtro.itensPorPagina"
+        [totalRecords]="totalRegistros"
+        [responsive]="true" #tabela>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Código</th>
+                <th>Descrição</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-tur>
+          <tr>
+              <td>{{tur.codigo}}</td>
+              <td>{{tur.descricao}}</td>
+              <td>
+                <a href="javascript:;"
+                  [pTooltip]="tur.ativo ? 'Desativar' : 'Ativar'"
+                  tooltipPosition="top"
+                  (click)="alternarStatus(tur)">
+                  {{ tur.ativo ? 'Ativo' : 'Inativo' }}
+                </a>
+              </td>
+              <td class="col-acoes">
+                <a pButton icon="fa fa-pencil-alt"
+                  pTooltip="Editar" tooltipPosition="top"
+                  [routerLink]="['/turnos', tur.id]">
+                </a>
+                <button *ngIf="temPermissao('ROLE_REMOVER_TURNO')" pButton icon="fa fa-trash"
+                  pTooltip="Excluir" tooltipPosition="top" class="ui-button-danger"
+                  (click)="confirmarExclusao(tur)">
+                </button>
+              </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

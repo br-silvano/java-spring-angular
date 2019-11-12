@@ -1,0 +1,86 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<app-header></app-header>
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1 class="title">{{title.getTitle()}}</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="pesquisaForm" autocomplete="off" (ngSubmit)="pesquisar()">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container label="Código">
+          <input pInputText type="text" formControlName="codigo">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container label="Nome">
+          <input pInputText type="text" formControlName="nome">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12">
+        <app-input-container label="Status">
+          <br><p-selectButton [options]="statuss" formControlName="ativo"></p-selectButton>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="field is-grouped">
+          <p class="control">
+            <button class="button is-danger" type="submit">Pesquisar</button>
+          </p>
+          <p class="control">
+            <a class="button is-success" routerLink="/unidades/nova">Nova Unidade</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-table [value]="unidades"
+        [lazy]="true" (onLazyLoad)="aoMudarPagina($event)"
+        [paginator]="true" [rows]="filtro.itensPorPagina"
+        [totalRecords]="totalRegistros"
+        [responsive]="true" #tabela>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-uni>
+          <tr>
+              <td>{{uni.codigo}}</td>
+              <td>{{uni.nome}}</td>
+              <td>
+                <a href="javascript:;"
+                  [pTooltip]="uni.ativo ? 'Desativar' : 'Ativar'"
+                  tooltipPosition="top"
+                  (click)="alternarStatus(uni)">
+                  {{ uni.ativo ? 'Ativo' : 'Inativo' }}
+                </a>
+              </td>
+              <td class="col-acoes">
+                <a pButton icon="fa fa-pencil-alt"
+                  pTooltip="Editar" tooltipPosition="top"
+                  [routerLink]="['/unidades', uni.id]">
+                </a>
+                <button *ngIf="temPermissao('ROLE_REMOVER_UNIDADE')" pButton icon="fa fa-trash"
+                  pTooltip="Excluir" tooltipPosition="top" class="ui-button-danger"
+                  (click)="confirmarExclusao(uni)">
+                </button>
+              </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

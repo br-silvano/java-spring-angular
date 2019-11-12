@@ -1,0 +1,16 @@
+<app-header></app-header>
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1 class="title">{{title.getTitle()}}</h1>
+    </div>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li routerLinkActive="is-active" [routerLink]="['alterar-senha']"><a>Alterar Senha</a></li>
+      <li routerLinkActive="is-active" [routerLink]="['alterar-email']"><a>Alterar E-mail</a></li>
+    </ul>
+  </div>
+  <router-outlet></router-outlet>
+</div>
+<app-footer></app-footer>

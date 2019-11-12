@@ -1,0 +1,5 @@
+<div [class.has-success]="hasSuccess()" [class.has-error]="hasError()">
+  <label>{{label}}</label>
+  <ng-content></ng-content>
+  <p-message severity="error" text="{{errorMessage}}" *ngIf="showTip && hasError()"></p-message>
+</div>

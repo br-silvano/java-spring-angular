@@ -1,0 +1,127 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<app-header></app-header>
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1 class="title">{{title.getTitle()}}</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="pesquisaForm" autocomplete="off" (ngSubmit)="pesquisar()">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container label="Nome">
+          <input pInputText type="text" formControlName="nome">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12">
+        <app-input-container label="Status">
+          <br><p-selectButton [options]="statuss" formControlName="ativo"></p-selectButton>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="field is-grouped">
+          <p class="control">
+            <button class="button is-danger" type="submit">Pesquisar</button>
+          </p>
+          <p class="control">
+            <a class="button is-success" routerLink="/usuarios/novo">Novo Usuário</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-table [value]="usuarios"
+        [lazy]="true" (onLazyLoad)="aoMudarPagina($event)"
+        [paginator]="true" [rows]="filtro.itensPorPagina"
+        [totalRecords]="totalRegistros"
+        [responsive]="true" #tabela>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-usu>
+          <tr>
+              <td>{{usu.nome}}</td>
+              <td>{{usu.email}}</td>
+              <td>
+                <a href="javascript:;"
+                  [pTooltip]="usu.ativo ? 'Desativar' : 'Ativar'"
+                  tooltipPosition="top"
+                  (click)="alternarStatus(usu)">
+                  {{ usu.ativo ? 'Ativo' : 'Inativo' }}
+                </a>
+              </td>
+              <td class="col-acoes">
+                <div class="field is-grouped is-pulled-left">
+                  <p class="control">
+                    <a pButton icon="fa fa-pencil-alt"
+                      pTooltip="Editar" tooltipPosition="top"
+                      [routerLink]="['/usuarios', usu.id]">
+                    </a>
+                  </p>
+                  <p class="control" *ngIf="temPermissao('ROLE_CADASTRAR_USUARIO')">
+                    <a pButton href="javascript:;" icon="fa fa-lock"
+                      pTooltip="Alterar Senha"
+                      tooltipPosition="top"
+                      (click)="showDialogAlteraSenha(usu.id)">
+                    </a>
+                  </p>
+                  <p class="control" *ngIf="temPermissao('ROLE_REMOVER_USUARIO')">
+                    <button pButton icon="fa fa-trash"
+                      pTooltip="Excluir" tooltipPosition="top" class="ui-button-danger"
+                      (click)="confirmarExclusao(usu)">
+                    </button>
+                  </p>
+                </div>
+              </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-dialog header="Alterar Senha" [(visible)]="displayAlteraSenha" [modal]="true"
+  [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70"
+  [maximizable]="false" [baseZIndex]="10000">
+  <form [formGroup]="alteraSenhaForm" autocomplete="off" (ngSubmit)="alterarSenha()">
+    <div class="column is-12">
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-12">
+          <div class="field">
+            <p class="control has-icons-left">
+              <input class="input" type="password" formControlName="novaSenha" placeholder="Nova Senha">
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="field">
+            <p class="control has-icons-left">
+              <input class="input" type="password" formControlName="confirmaNovaSenha" placeholder="Confirma Nova Senha">
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <button class="button is-success is-fullwidth" type="submit" [disabled]="alteraSenhaForm.invalid">Alterar</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</p-dialog>
+<app-footer></app-footer>

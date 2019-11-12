@@ -1,0 +1,90 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<app-header></app-header>
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1 class="title">{{title.getTitle()}}</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="pesquisaForm" autocomplete="off" (ngSubmit)="pesquisar()">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container label="Código">
+          <input pInputText type="text" formControlName="codigo">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container label="Descrição">
+          <input pInputText type="text" formControlName="descricao">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12">
+        <app-input-container label="Status">
+          <br><p-selectButton [options]="statuss" formControlName="ativo"></p-selectButton>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="field is-grouped">
+          <p class="control">
+            <button class="button is-danger" type="submit">Pesquisar</button>
+          </p>
+          <p class="control">
+            <a class="button is-success" routerLink="/cursos/novo">Novo Curso</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-table [value]="cursos"
+        [lazy]="true" (onLazyLoad)="aoMudarPagina($event)"
+        [paginator]="true" [rows]="filtro.itensPorPagina"
+        [totalRecords]="totalRegistros"
+        [responsive]="true" #tabela>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Código</th>
+                <th>Descrição</th>
+                <th>Vlr. Mensal</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-cur>
+          <tr>
+              <td>{{cur.codigo}}</td>
+              <td>{{cur.descricao}}</td>
+              <td>
+                <span>{{ cur.valorMensalidade | number:'1.2-2' }}</span>
+              </td>
+              <td>
+                <a href="javascript:;"
+                  [pTooltip]="cur.ativo ? 'Desativar' : 'Ativar'"
+                  tooltipPosition="top"
+                  (click)="alternarStatus(cur)">
+                  {{ cur.ativo ? 'Ativo' : 'Inativo' }}
+                </a>
+              </td>
+              <td class="col-acoes">
+                <a pButton icon="fa fa-pencil-alt"
+                  pTooltip="Editar" tooltipPosition="top"
+                  [routerLink]="['/cursos', cur.id]">
+                </a>
+                <button *ngIf="temPermissao('ROLE_REMOVER_CURSO')" pButton icon="fa fa-trash"
+                  pTooltip="Excluir" tooltipPosition="top" class="ui-button-danger"
+                  (click)="confirmarExclusao(cur)">
+                </button>
+              </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

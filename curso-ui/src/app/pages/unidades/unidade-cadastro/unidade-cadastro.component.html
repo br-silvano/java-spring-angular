@@ -1,0 +1,98 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<app-header></app-header>
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1 class="title">{{title.getTitle()}}</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="unidadeForm" autocomplete="off" (ngSubmit)="salvar()">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <small><i>Os campos com (*) são obrigatórios</i></small>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe o código (mín. 2 máx. 10 caracteres)" label="Código*">
+            <input pInputText type="text" formControlName="codigo">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe o nome (mín. 5 máx. 50 caracteres)" label="Nome*">
+          <input pInputText type="text" formControlName="nome">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe o cep" label="CEP*">
+          <div class="field is-grouped">
+            <p class="control">
+              <p-inputMask formControlName="cep"
+                mask="99999-999" placeholder="Ex. 99999-999">
+              </p-inputMask>
+            </p>
+            <p class="control">
+              <a pButton icon="fa fa-map-pin" href="javascript:;"
+                pTooltip="Buscar CEP"
+                tooltipPosition="top"
+                (click)="buscarCep()">
+              </a>
+            </p>
+          </div>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe o endereço (mín. 5 máx. 50 caracteres)" label="Endereço*">
+          <input pInputText type="text" formControlName="logradouro">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe o número (máx. 20 caracteres)" label="Número*">
+          <input pInputText type="text" formControlName="numero">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe o bairro (mín. 5 máx. 50 caracteres)" label="Bairro*">
+          <input pInputText type="text" formControlName="bairro">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe o complemento (mín. 5 máx. 50 caracteres)" label="Complemento">
+          <input pInputText type="text" formControlName="complemento">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe a cidade (mín. 5 máx. 50 caracteres)" label="Cidade*">
+          <input pInputText type="text" formControlName="cidade">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe a uf" label="UF*">
+          <p-inputMask formControlName="uf"
+            mask="aa" placeholder="Ex. SP">
+          </p-inputMask>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="field is-grouped">
+          <p class="control">
+            <button class="button is-success" type="submit" [disabled]="unidadeForm.invalid">Salvar</button>
+          </p>
+          <p class="control">
+            <a class="button" routerLink="/unidades">Voltar para a pesquisa</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<app-footer></app-footer>

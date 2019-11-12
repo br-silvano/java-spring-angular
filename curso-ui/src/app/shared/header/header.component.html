@@ -1,0 +1,64 @@
+<header>
+  <nav class="navbar is-danger" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <span class="navbar-item">
+        <b>{{projeto}}</b>
+      </span>
+      <a (click)="toggleNavbar()" role="button" #navBurger class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div id="navMenu" class="navbar-menu" #navMenu>
+      <div class="navbar-start">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a *ngIf="logado" class="navbar-link">
+            Cadastros
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" *ngIf="logado && temPermissao('ROLE_PESQUISAR_ALUNO')" routerLink="/alunos" routerLinkActive="is-active">
+              Alunos
+            </a>
+            <a class="navbar-item" *ngIf="logado && temPermissao('ROLE_PESQUISAR_CURSO')" routerLink="/cursos" routerLinkActive="is-active">
+              Cursos
+            </a>
+            <a class="navbar-item" *ngIf="logado && temPermissao('ROLE_PESQUISAR_TURNO')" routerLink="/turnos" routerLinkActive="is-active">
+              Turnos
+            </a>
+            <a class="navbar-item" *ngIf="logado && temPermissao('ROLE_PESQUISAR_UNIDADE')" routerLink="/unidades" routerLinkActive="is-active">
+              Unidades
+            </a>
+            <a class="navbar-item" *ngIf="logado && temPermissao('ROLE_PESQUISAR_TURMA')" routerLink="/turmas" routerLinkActive="is-active">
+              Turmas
+            </a>
+            <a class="navbar-item" *ngIf="logado && temPermissao('ROLE_PESQUISAR_USUARIO')" routerLink="/usuarios" routerLinkActive="is-active">
+              Usuários
+            </a>
+          </div>
+        </div>
+        <a class="navbar-item" *ngIf="logado && temPermissao('ROLE_PESQUISAR_MATRICULA')" routerLink="/matriculas" routerLinkActive="is-active">
+          Matrículas
+        </a>
+      </div>
+      <div class="navbar-end">
+        <a *ngIf="!logado" class="navbar-item" routerLink="/login" routerLinkActive="is-active">
+          Login
+        </a>
+        <div *ngIf="logado" class="navbar-item">
+          Bem vindo, {{ auth.jwtPayload?.nome | slice:0:40 }}!
+        </div>
+        <a *ngIf="logado" class="navbar-item" routerLink="/perfil" routerLinkActive="is-active">
+          <span class="icon">
+            <i class="fas fa-user-alt"></i>
+          </span>
+        </a>
+        <a *ngIf="logado" class="navbar-item" href="javascript:;" (click)="logout();">
+          <span class="icon">
+            <i class="fas fa-sign-out-alt"></i>
+          </span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>

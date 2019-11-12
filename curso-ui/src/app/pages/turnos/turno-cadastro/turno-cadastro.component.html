@@ -1,0 +1,41 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<app-header></app-header>
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1 class="title">{{title.getTitle()}}</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="turnoForm" autocomplete="off" (ngSubmit)="salvar()">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <small><i>Os campos com (*) são obrigatórios</i></small>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe o código (máx. 10 caracteres)" label="Código*">
+            <input pInputText type="text" formControlName="codigo">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe a descrição (mín. 5 máx. 50 caracteres)" label="Descrição*">
+          <input pInputText type="text" formControlName="descricao">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="field is-grouped">
+          <p class="control">
+            <button class="button is-success" type="submit" [disabled]="turnoForm.invalid">Salvar</button>
+          </p>
+          <p class="control">
+            <a class="button" routerLink="/turnos">Voltar para a pesquisa</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<app-footer></app-footer>

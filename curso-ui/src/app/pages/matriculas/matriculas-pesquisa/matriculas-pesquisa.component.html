@@ -1,0 +1,95 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<app-header></app-header>
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1 class="title">{{title.getTitle()}}</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="pesquisaForm" autocomplete="off" (ngSubmit)="pesquisar()">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+          <app-input-container label="Número">
+            <input pInputText type="text" formControlName="id">
+          </app-input-container>
+        </div>
+
+        <div class="ui-g-12 ui-fluid">
+          <app-input-container label="CPF">
+            <input pInputText type="text" formControlName="cpf">
+          </app-input-container>
+        </div>
+
+        <div formGroupName="statusMatricula" class="ui-g-12">
+          <app-input-container label="Status">
+            <br><p-selectButton [options]="statuss" formControlName="id"></p-selectButton>
+          </app-input-container>
+        </div>
+
+        <div class="ui-g-12">
+          <div class="field is-grouped">
+            <p class="control">
+              <button class="button is-danger" type="submit">Pesquisar</button>
+            </p>
+            <p class="control">
+              <a class="button is-success" routerLink="/matriculas/nova">Nova Matrícula</a>
+            </p>
+          </div>
+        </div>
+    </div>
+  </form>
+
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-table [value]="matriculas"
+        [lazy]="true" (onLazyLoad)="aoMudarPagina($event)"
+        [paginator]="true" [rows]="filtro.itensPorPagina"
+        [totalRecords]="totalRegistros"
+        [responsive]="true" #tabela>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Número</th>
+                <th>Aluno</th>
+                <th>Turma</th>
+                <th>Vlr. Mensal</th>
+                <th>Perc. Desc.</th>
+                <th>Vlr. C/Desc.</th>
+                <th>Dia Pagto</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-mat>
+          <tr>
+              <td>{{mat.id}}</td>
+              <td>{{mat.aluno.nome}}</td>
+              <td>{{mat.turma.nome}}</td>
+              <td>
+                <span>{{ mat.valorMensalidade | currency: 'BRL': true }}</span>
+              </td>
+              <td>
+                <span>{{ mat.percentualDesconto | currency: 'BRL': true }}</span>
+              </td>
+              <td>
+                <span>{{ mat.valorMensalidade - ((mat.valorMensalidade * mat.percentualDesconto) / 100) | currency: 'BRL': true }}</span>
+              </td>
+              <td>{{mat.diaPagamento}}</td>
+              <td>{{mat.statusMatricula.descricao}}</td>
+              <td class="col-acoes">
+                <a pButton icon="fa fa-pencil-alt"
+                  pTooltip="Editar" tooltipPosition="top"
+                  [routerLink]="['/matriculas', mat.id]">
+                </a>
+                <button *ngIf="temPermissao('ROLE_REMOVER_MATRICULA')" pButton icon="fa fa-trash"
+                  pTooltip="Excluir" tooltipPosition="top" class="ui-button-danger"
+                  (click)="confirmarExclusao(mat)">
+                </button>
+              </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

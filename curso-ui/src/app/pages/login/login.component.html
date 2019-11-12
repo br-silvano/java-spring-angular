@@ -1,0 +1,42 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<app-header></app-header>
+<div class="container">
+  <div class="column is-6 is-offset-3">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1 class="title">{{title.getTitle()}}</h1>
+      </div>
+    </div>
+
+    <form [formGroup]="loginForm" autocomplete="off" (ngSubmit)="login()">
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-12">
+          <div class="field">
+            <p class="control has-icons-left has-icons-right">
+              <input class="input" type="email" formControlName="usuario" placeholder="E-mail">
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <div class="ui-g-12">
+          <div class="field">
+            <p class="control has-icons-left">
+              <input class="input" type="password" formControlName="senha" placeholder="Senha">
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <div class="ui-g-12">
+          <button class="button is-success is-fullwidth" type="submit" [disabled]="loginForm.invalid">Login</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<app-footer></app-footer>

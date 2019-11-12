@@ -1,0 +1,331 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<app-header></app-header>
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1 class="title">{{title.getTitle()}}</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="alunoForm" autocomplete="off" (ngSubmit)="salvar()">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <small><i>Os campos com (*) são obrigatórios</i></small><br><br>
+        <b>Dados Cadastrais</b>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe o cpf" label="CPF*">
+          <p-inputMask formControlName="cpf"
+            mask="999.999.999-99" placeholder="Ex. 999.999.999-99">
+          </p-inputMask>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe o nome (mín. 5 máx. 50 caracteres)" label="Nome*">
+          <input pInputText type="text" formControlName="nome">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe a data de nascimento" label="Data de Nascimento*">
+          <p-calendar formControlName="dataNascimento" dateFormat="dd/mm/yy" placeholder="Ex. dd/mm/yyyy"
+            [inline]="false" [readonlyInput]="false" [showIcon]="false"
+            [locale]="calendarLocale">
+          </p-calendar>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe o e-mail (mín. 5 máx. 50 caracteres)" label="E-mail">
+          <input pInputText type="text" formControlName="email">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe o cep" label="CEP*">
+          <div class="field is-grouped">
+            <p class="control">
+              <p-inputMask formControlName="cep"
+                mask="99999-999" placeholder="Ex. 99999-999">
+              </p-inputMask>
+            </p>
+            <p class="control">
+              <a pButton icon="fa fa-map-pin" href="javascript:;"
+                pTooltip="Buscar CEP"
+                tooltipPosition="top"
+                (click)="buscarCepAluno()">
+              </a>
+            </p>
+          </div>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe o endereço (mín. 5 máx. 50 caracteres)" label="Endereço*">
+          <input pInputText type="text" formControlName="logradouro">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe o número (mín. 5 máx. 20 caracteres)" label="Número*">
+          <input pInputText type="text" formControlName="numero">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe o bairro (mín. 5 máx. 50 caracteres)" label="Bairro*">
+          <input pInputText type="text" formControlName="bairro">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe o complemento (mín. 5 máx. 50 caracteres)" label="Complemento">
+          <input pInputText type="text" formControlName="complemento">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe a cidade (mín. 5 máx. 50 caracteres)" label="Cidade*">
+          <input pInputText type="text" formControlName="cidade">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe a uf" label="UF*">
+          <p-inputMask formControlName="uf"
+            mask="aa" placeholder="Ex. SP">
+          </p-inputMask>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12">
+        <b>Telefones Aluno</b><hr>
+        <small><i>Máximo 3 telefones (1 obrigatório)</i></small>
+      </div>
+
+      <div formArrayName="telefones" class="ui-g-12">
+        <div *ngFor="let telefone of getTelefonesAluno(); let tel = index">
+          <p-panel>
+            <p-header>
+              <div class="ui-helper-clearfix">
+                <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:3px">
+                  Telefone {{tel + 1}} Aluno
+                </span>
+
+                <div class="field is-grouped is-pulled-right">
+                  <p class="control" *ngIf="getTelefonesAluno().length > 1">
+                    <button pButton type="button" icon="fa fa-trash"
+                      pTooltip="Excluir" tooltipPosition="top" class="ui-button-danger"
+                      (click)="removeTelefoneAluno(tel)">
+                    </button>
+                  </p>
+                  <p class="control" *ngIf="getTelefonesAluno().length < 3">
+                    <button pButton type="button" icon="fa fa-plus"
+                      pTooltip="Novo" tooltipPosition="top" class="ui-button-info"
+                      (click)="adicionaTelefoneAluno()">
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </p-header>
+            <div [formGroupName]="tel">
+              <app-phone [group]="getTelefoneAluno(tel)">
+                <small *ngIf="alunoForm.controls['nome'].value">
+                  <i>Aluno: {{alunoForm.controls['nome'].value}}</i>
+                </small>
+              </app-phone>
+            </div>
+          </p-panel>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <b>Responsáveis Aluno</b><hr>
+        <small><i>Máximo 5 responsáveis (1 obrigatório)</i></small>
+      </div>
+
+      <div formArrayName="responsaveis" class="ui-g-12">
+        <div *ngFor="let responsavel of getResponsaveisAluno(); let resp = index">
+          <p-panel>
+            <p-header>
+              <div class="ui-helper-clearfix">
+                <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:3px">
+                  Responsável {{resp + 1}} Aluno
+                </span>
+                <div class="field is-grouped is-pulled-right">
+                  <p class="control" *ngIf="getResponsaveisAluno().length > 1">
+                    <button pButton type="button" icon="fa fa-trash"
+                      pTooltip="Excluir" tooltipPosition="top" class="ui-button-danger"
+                      (click)="removeResponsavel(resp)">
+                    </button>
+                  </p>
+                  <p class="control" *ngIf="getResponsaveisAluno().length < 5">
+                    <button pButton type="button" icon="fa fa-plus"
+                      pTooltip="Novo" tooltipPosition="top" class="ui-button-info"
+                      (click)="adicionaResponsavel()">
+                    </button>
+                  </p>
+                  <p class="control" *ngIf="getResponsaveisAluno().length < 5">
+                    <button pButton type="button" icon="fa fa-copy"
+                      pTooltip="Copiar" tooltipPosition="top" class="ui-button-info"
+                      (click)="copiaDadosAluno(resp)">
+                    </button>
+                  </p>
+                </div>
+              </div>
+              <b></b>
+            </p-header>
+            <div class="ui-g" [formGroupName]="resp">
+              <div class="ui-g-12">
+                <app-input-container errorMessage="Informe o tipo" label="Tipo*">
+                  <br><p-selectButton formControlName="tipo" [options]="tipos"></p-selectButton>
+                </app-input-container>
+              </div>
+
+              <div class="ui-g-12 ui-md-3 ui-fluid">
+                <app-input-container errorMessage="Informe o cpf" label="CPF">
+                  <p-inputMask formControlName="cpf"
+                    mask="999.999.999-99" placeholder="Ex. 999.999.999-99">
+                  </p-inputMask>
+                </app-input-container>
+              </div>
+
+              <div class="ui-g-12 ui-fluid">
+                <app-input-container errorMessage="Informe o nome (mín. 5 máx. 50 caracteres)" label="Nome*">
+                  <input pInputText type="text" formControlName="nome">
+                </app-input-container>
+              </div>
+
+              <div class="ui-g-12 ui-md-3 ui-fluid">
+                <app-input-container errorMessage="Informe a data de nascimento" label="Data de Nascimento">
+                  <p-calendar formControlName="dataNascimento" dateFormat="dd/mm/yy" placeholder="Ex. dd/mm/yyyy"
+                    [inline]="false" [readonlyInput]="false" [showIcon]="false"
+                    [locale]="calendarLocale">
+                  </p-calendar>
+                </app-input-container>
+              </div>
+
+              <div class="ui-g-12 ui-fluid">
+                <app-input-container errorMessage="Informe o e-mail (mín. 5 máx. 50 caracteres)" label="E-mail">
+                  <input pInputText type="email" formControlName="email">
+                </app-input-container>
+              </div>
+
+              <div class="ui-g-12 ui-md-3 ui-fluid">
+                <app-input-container errorMessage="Informe o cep" label="CEP*">
+                  <div class="field is-grouped">
+                    <p class="control">
+                      <p-inputMask formControlName="cep"
+                        mask="99999-999" placeholder="Ex. 99999-999">
+                      </p-inputMask>
+                    </p>
+                    <p class="control">
+                      <a pButton icon="fa fa-map-pin" href="javascript:;"
+                        pTooltip="Buscar CEP"
+                        tooltipPosition="top"
+                        (click)="buscarCepResponsavel(resp)">
+                      </a>
+                    </p>
+                  </div>
+                </app-input-container>
+              </div>
+
+              <div class="ui-g-12 ui-fluid">
+                <app-input-container errorMessage="Informe o endereço (mín. 5 máx. 50 caracteres)" label="Endereço*">
+                  <input pInputText type="text" formControlName="logradouro">
+                </app-input-container>
+              </div>
+
+              <div class="ui-g-12 ui-md-3 ui-fluid">
+                <app-input-container errorMessage="Informe o número (mín. 5 máx. 20 caracteres)" label="Número*">
+                  <input pInputText type="text" formControlName="numero">
+                </app-input-container>
+              </div>
+
+              <div class="ui-g-12 ui-fluid">
+                <app-input-container errorMessage="Informe o bairro (mín. 5 máx. 50 caracteres)" label="Bairro*">
+                  <input pInputText type="text" formControlName="bairro">
+                </app-input-container>
+              </div>
+
+              <div class="ui-g-12 ui-fluid">
+                <app-input-container errorMessage="Informe o complemento (mín. 5 máx. 50 caracteres)" label="Complemento">
+                  <input pInputText type="text" formControlName="complemento">
+                </app-input-container>
+              </div>
+
+              <div class="ui-g-12 ui-fluid">
+                <app-input-container errorMessage="Informe a cidade (mín. 5 máx. 50 caracteres)" label="Cidade*">
+                  <input pInputText type="text" formControlName="cidade">
+                </app-input-container>
+              </div>
+
+              <div class="ui-g-12 ui-md-3 ui-fluid">
+                <app-input-container errorMessage="Informe a uf" label="UF*">
+                  <p-inputMask formControlName="uf"
+                    mask="aa" placeholder="Ex. SP">
+                  </p-inputMask>
+                </app-input-container>
+              </div>
+
+              <div class="ui-g-12">
+                <b>Telefones Responsável</b><hr>
+                <small><i>Máximo 3 telefones (1 obrigatório)</i></small>
+              </div>
+
+              <div formArrayName="telefones" class="ui-g-12">
+                <div *ngFor="let telefone of getTelefonesResponsavelAluno(resp); let tel = index">
+                  <p-panel>
+                    <p-header>
+                      <div class="ui-helper-clearfix">
+                        <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:3px">
+                          Telefone {{tel + 1}} Responsável
+                        </span>
+                        <div class="field is-grouped is-pulled-right">
+                          <p class="control" *ngIf="getTelefonesResponsavelAluno(resp).length > 1">
+                            <button pButton type="button" icon="fa fa-trash"
+                              pTooltip="Excluir" tooltipPosition="top" class="ui-button-danger"
+                              (click)="removeTelefoneResponsavel(resp, tel)">
+                            </button>
+                          </p>
+                          <p class="control" *ngIf="getTelefonesResponsavelAluno(resp).length < 3">
+                            <button pButton type="button" icon="fa fa-plus"
+                              pTooltip="Novo" tooltipPosition="top" class="ui-button-info"
+                              (click)="adicionaTelefoneResponsavel(resp)">
+                            </button>
+                          </p>
+                        </div>
+                      </div>
+                    </p-header>
+                    <div [formGroupName]="tel">
+                      <app-phone [group]="getTelefoneResponsavelAluno(resp, tel)">
+                        <small *ngIf="alunoForm.controls.responsaveis.controls[resp].get('nome').value">
+                          <i>Responsável: {{alunoForm.controls.responsaveis.controls[resp].get('nome').value}}</i>
+                        </small>
+                      </app-phone>
+                    </div>
+                  </p-panel>
+                </div>
+              </div>
+            </div>
+          </p-panel>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="field is-grouped">
+          <p class="control">
+            <button class="button is-success" type="submit" [disabled]="alunoForm.invalid">Salvar</button>
+          </p>
+          <p class="control">
+            <a class="button" routerLink="/alunos">Voltar para a pesquisa</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>
+<app-footer></app-footer>

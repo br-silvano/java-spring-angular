@@ -1,0 +1,89 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<app-header></app-header>
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1 class="title">{{title.getTitle()}}</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="turmaForm" autocomplete="off" (ngSubmit)="salvar()">
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <small><i>Os campos com (*) são obrigatórios</i></small>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe o código (mín. 2 máx. 10 caracteres)" label="Código*">
+            <input pInputText type="text" formControlName="codigo">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe o nome (mín. 5 máx. 50 caracteres)" label="Nome*">
+          <input pInputText type="text" formControlName="nome">
+        </app-input-container>
+      </div>
+
+      <div formGroupName="unidade" class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe a unidade" label="Unidade*">
+          <p-dropdown formControlName="id" [options]="unidades"
+            placeholder="Selecione" [filter]="true">
+          </p-dropdown>
+        </app-input-container>
+      </div>
+
+      <div formGroupName="curso" class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe o curso" label="Curso*">
+          <p-dropdown formControlName="id" [options]="cursos"
+            placeholder="Selecione" [filter]="true">
+          </p-dropdown>
+        </app-input-container>
+      </div>
+
+      <div formGroupName="turno" class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe o turno" label="Turno*">
+          <p-dropdown formControlName="id" [options]="turnos"
+            placeholder="Selecione">
+          </p-dropdown>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe a hora de início" label="Hora de Início*">
+          <p-inputMask formControlName="horaInicio"
+            mask="99:99" placeholder="Ex. 00:00">
+          </p-inputMask>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe a hora de término" label="Hora de Término*">
+          <p-inputMask formControlName="horaTermino"
+            mask="99:99" placeholder="Ex. 00:00">
+          </p-inputMask>
+        </app-input-container>
+      </div>
+
+      <div formGroupName="statusTurma" class="ui-g-12">
+        <app-input-container errorMessage="Informe o status" label="Status">
+          <br><p-selectButton [options]="statuss" formControlName="id"></p-selectButton>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="field is-grouped">
+          <p class="control">
+            <button class="button is-success" type="submit" [disabled]="turmaForm.invalid">Salvar</button>
+          </p>
+          <p class="control">
+            <a class="button" routerLink="/turmas">Voltar para a pesquisa</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>
+<app-footer></app-footer>

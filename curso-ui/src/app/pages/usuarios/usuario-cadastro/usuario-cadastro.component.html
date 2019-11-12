@@ -1,0 +1,63 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<app-header></app-header>
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1 class="title">{{title.getTitle()}}</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="usuarioForm" autocomplete="off" (ngSubmit)="salvar()">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <small><i>Os campos com (*) são obrigatórios</i></small>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe o nome (mín. 5 máx. 50 caracteres)" label="Nome*">
+          <input pInputText type="text" formControlName="nome">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe o e-mail (mín. 5 máx. 50 caracteres)" label="E-mail*">
+            <input pInputText type="email" formControlName="email">
+        </app-input-container>
+      </div>
+
+      <div [hidden]="editando" class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe a senha (mín. 5 máx. 12 caracteres)" label="Senha*">
+          <input pPassword type="password" formControlName="senha"
+            promptLabel="Por favor insira uma senha"
+            weakLabel="Fraca"
+            mediumLabel="Média"
+            strongLabel="Forte">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12">
+        <app-input-container errorMessage="Informe as permissões" label="Permissões*">
+          <br><p-selectButton [options]="permissoes" formControlName="permissoes" multiple="true"></p-selectButton>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12" *ngIf="unidades.length > 0">
+        <app-input-container errorMessage="Informe as unidades" label="Unidades">
+          <br><p-selectButton [options]="unidades" formControlName="unidades" multiple="true"></p-selectButton>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="field is-grouped">
+          <p class="control">
+            <button class="button is-success" type="submit" [disabled]="usuarioForm.invalid">Salvar</button>
+          </p>
+          <p class="control">
+            <a class="button" routerLink="/usuarios">Voltar para a pesquisa</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,13 @@
+<div class="ui-g" [formGroup]="phoneForm">
+  <div class="ui-g-12 ui-md-3 ui-lg-2 ui-fluid">
+    <app-input-container errorMessage="Informe o número" label="Número*">
+      <input pInputText type="text" [textMask]="{mask: maskTelefone}" formControlName="numero">
+    </app-input-container>
+  </div>
+
+  <div class="ui-g-12 ui-md-9 ui-lg-10 ui-fluid">
+    <app-input-container errorMessage="Informe a observação (mín. 5 máx. 50 caracteres)" label="Observação">
+      <input pInputText type="text" formControlName="observacao">
+    </app-input-container>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<app-header></app-header>
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1 class="title">{{title.getTitle()}}</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="matriculaForm" autocomplete="off" (ngSubmit)="salvar()">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <small><i>Os campos com (*) são obrigatórios</i></small>
+      </div>
+
+      <div formGroupName="aluno" class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe a aluno" label="Aluno*">
+          <p-dropdown formControlName="id" [options]="alunos"
+            placeholder="Selecione" [filter]="true">
+          </p-dropdown>
+        </app-input-container>
+      </div>
+
+      <div formGroupName="turma" class="ui-g-12 ui-fluid">
+        <app-input-container errorMessage="Informe o turma" label="Turma*">
+          <p-dropdown formControlName="id" [options]="turmas"
+            placeholder="Selecione" [filter]="true">
+          </p-dropdown>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe o valor da mensalidade" label="Vlr. Mensal*">
+          <input pInputText type="text" formControlName="valorMensalidade" placeholder="0,00"
+            currencyMask [options]="{ prefix: 'R$', thousands: '.', decimal: ',', allowNegative: false }">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe o percentual de desconto" label="Perc. Desc.*">
+          <p-spinner formControlName="percentualDesconto" [min]="0" [max]="100" [step]="0.01"  decimalSeparator="," thousandSeparator="."></p-spinner>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe o valor do desconto" label="Vlr. C/Desc.*">
+          <input pInputText type="text" formControlName="valorDesconto" placeholder="0,00"
+            currencyMask [options]="{ prefix: 'R$', thousands: '.', decimal: ',', allowNegative: false }">
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <app-input-container errorMessage="Informe o dia do pagamento" label="Dia Pagto*">
+          <p-spinner formControlName="diaPagamento" [min]="1" [max]="28"></p-spinner>
+        </app-input-container>
+      </div>
+
+      <div formGroupName="statusMatricula" class="ui-g-12">
+        <app-input-container errorMessage="Informe o status" label="Status">
+          <br><p-selectButton [options]="statuss" formControlName="id"></p-selectButton>
+        </app-input-container>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="field is-grouped">
+          <p class="control">
+            <button class="button is-success" type="submit" [disabled]="matriculaForm.invalid">Salvar</button>
+          </p>
+          <p class="control">
+            <a class="button" routerLink="/matriculas">Voltar para a pesquisa</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<app-footer></app-footer>

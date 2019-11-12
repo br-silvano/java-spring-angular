@@ -1,0 +1,42 @@
+<div class="column is-6 is-offset-3">
+  <form [formGroup]="alteraEmailForm" autocomplete="off" (ngSubmit)="alterar()">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <div class="field">
+          <p class="control has-icons-left">
+            <input class="input" type="password" formControlName="senha" placeholder="Senha">
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="field">
+          <p class="control has-icons-left">
+            <input class="input" type="text" formControlName="novoEmail" placeholder="Novo E-mail">
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="field">
+          <p class="control has-icons-left">
+            <input class="input" type="text" formControlName="confirmaNovoEmail" placeholder="Confirma Novo E-mail">
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <button class="button is-success is-fullwidth" type="submit" [disabled]="alteraEmailForm.invalid">Alterar</button>
+      </div>
+    </div>
+  </form>
+</div>
