@@ -49,10 +49,10 @@ $ ng generate directive|pipe|service|class|module
 
 ## Publicação
 ```shell
-ng build
+$ ng build
 ```
 [Artefatos]
 ```shell
 $ dist/
-ng build -prod
+$ ng build -prod
 ```
