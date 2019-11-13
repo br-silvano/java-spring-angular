@@ -53,6 +53,5 @@ $ ng build
 ```
 [Artefatos]
 ```shell
-$ dist/
 $ ng build -prod
 ```
