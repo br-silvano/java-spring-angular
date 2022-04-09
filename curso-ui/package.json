@@ -30,7 +30,7 @@
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.11",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "ng2-currency-mask": "^5.3.1",
     "ngx-loading": "^3.0.1",
     "ngx-toasta": "^0.1.0",
